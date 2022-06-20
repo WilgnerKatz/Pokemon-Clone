@@ -77,7 +77,8 @@ const player = new Sprite({
     },
     image: playerDownImage, 
     frames: {
-        max: 4
+        max: 4,
+        hold: 10
     },
     sprites: {
         up: playerUpImage, 
@@ -143,7 +144,7 @@ function movement() {
     player.draw()
 
     let moving = true;
-    player.moving = false;
+    player.animate = false;
 
     if (battle.initiated) return
     // Battle Collision Zone and Activate Battle
@@ -201,7 +202,7 @@ function movement() {
         // This allows for holding two different movement keys at the same time, and also prevents certain objects from moving, and also prevents Player From Colliding with boundary
        
         if (keys.w.pressed && lastKey === 'w') {
-        player.moving = true;    
+        player.animate = true;    
         player.image = player.sprites.up
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -230,7 +231,7 @@ function movement() {
             })
 
           } else if (keys.s.pressed && lastKey === 's')  {
-            player.moving = true;
+            player.animate = true;
             player.image = player.sprites.down
             for (let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i]
@@ -256,7 +257,7 @@ function movement() {
             movable.position.y -=3
         })
         } else if (keys.a.pressed && lastKey === 'a')  {
-            player.moving = true;
+            player.animate = true;
             player.image = player.sprites.left
             for (let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i]
@@ -282,7 +283,7 @@ function movement() {
             movable.position.x +=3
         })
         } else if (keys.d.pressed && lastKey === 'd') {
-            player.moving = true;
+            player.animate = true;
             player.image = player.sprites.right
             for (let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i]
@@ -322,20 +323,44 @@ const battleBackground = new Sprite({
 }, 
 image: battleBackgroundImage
 })
-
+// enemy
 const draggleImage = new Image()
 draggleImage.src = './Assets/draggleSprite.png'
 const draggle = new Sprite({
    position: {
+    x: 800,
+    y: 100
+   }, 
+   image: draggleImage,
+   frames: {
+     max: 4, 
+     hold: 30
+   },
+   animate: true
+})
+
+const embyImage = new Image()
+embyImage.src = './Assets/embySprite.png'
+const emby = new Sprite({
+   position: {
     x: 280,
     y: 325
    }, 
-   image: draggleImage
+   image: embyImage,
+   frames: {
+     max: 4, 
+     hold: 30
+   },
+   animate: true
 })
+
+//animateBattle()
 
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
+    draggle.draw()
+    emby.draw()
 
 }
 
