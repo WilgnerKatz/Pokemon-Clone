@@ -132,7 +132,7 @@ const battle = {
 }
 
 function movement() {
-    window.requestAnimationFrame(movement);
+    const animationId = window.requestAnimationFrame(movement);
     background.draw()
     boundaries.forEach(boundary => {
       boundary.draw();  
@@ -167,8 +167,33 @@ function movement() {
               //Random Chance Battle Happens
               && Math.random() < 0.01
             ) {
-                console.log('activate battle');
+                console.log('activate battle')
+                // deactivate map loop
+                window.cancelAnimationFrame(animationId)
                 battle.initiated = true
+                //Battle Transition to Black
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete() {
+                       gsap.to('#overlappingDiv', {
+                        opacity: 1,
+                        duration: 0.4,
+                        onComplete() {
+                            animateBattle()
+                            gsap.to('#overlappingDiv', {
+                                opacity: 0,
+                                duration: 0.4
+                               }) 
+                        }
+                       }) 
+
+
+                       animateBattle()
+                    }
+                 })
                 break;
             }
           }
@@ -286,6 +311,34 @@ function movement() {
         
 }
 movement();
+
+
+const battleBackgroundImage = new Image();
+battleBackgroundImage.src = './Assets/battleBackground.png'
+const battleBackground = new Sprite({
+    position: {
+   x: 0, 
+   y: 0
+}, 
+image: battleBackgroundImage
+})
+
+const draggleImage = new Image()
+draggleImage.src = './Assets/draggleSprite.png'
+const draggle = new Sprite({
+   position: {
+    x: 280,
+    y: 325
+   }, 
+   image: draggleImage
+})
+
+function animateBattle() {
+    window.requestAnimationFrame(animateBattle)
+    battleBackground.draw()
+
+}
+
 
 
 // WSAD 
