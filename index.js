@@ -2,6 +2,8 @@ const canvas = document.querySelector('canvas');
 
 const context = canvas.getContext('2d');
 
+
+
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -12,6 +14,11 @@ for (let i = 0; i < collisions.length; i+= 70) {
 
 }
 
+const battleZonesMap = []
+for (let i = 0; i < battleZonesData.length; i+= 70) {
+    battleZonesMap.push(battleZonesData.slice(i, 70 + i));
+
+}
 
 
 const boundaries = []
@@ -24,6 +31,21 @@ collisionsMap.forEach((row, i) => {
     row.forEach ((symbol, j) => {
     if (symbol === 1025)
      boundaries.push(
+        new Boundary({
+            position: {
+         x: j * Boundary.width + offset.x,
+         y: i * Boundary.height + offset.y
+     }}))   
+    })
+})
+
+
+const battleZones = []
+
+battleZonesMap.forEach((row, i) => {
+    row.forEach ((symbol, j) => {
+    if (symbol === 1025)
+     battleZones.push(
         new Boundary({
             position: {
          x: j * Boundary.width + offset.x,
@@ -93,7 +115,7 @@ const keys = {
 
 
 
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, ...battleZones]
 
 function collision({rectangle1, rectangle2}) {
 return (
@@ -103,17 +125,56 @@ return (
     rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 
 }
+
+
+const battle = {
+    initiated: false
+}
+
 function movement() {
     window.requestAnimationFrame(movement);
     background.draw()
     boundaries.forEach(boundary => {
       boundary.draw();  
     })
+    battleZones.forEach (battleZone => {
+     battleZone.draw()
+    })
     player.draw()
 
+    let moving = true;
+    player.moving = false;
+
+    if (battle.initiated) return
+    // Battle Collision Zone and Activate Battle
+    if (keys.w.pressed || keys.s.pressed ||keys.a.pressed || keys.d.pressed) {
+        for (let i = 0; i < battleZones.length; i++) {
+            const battleZone = battleZones[i]
+        // So the collision doesn't start  at the edges
+            const overlappingArea = (Math.min(player.position.x + 
+                player.width, battleZone.position.x + battleZone.width) - Math.max(player.position.x, 
+                battleZone.position.x)) * 
+                (Math.min(player.position.y + player.height, battleZone.position.y +battleZone.height) - 
+                Math.max(player.position.y, battleZone.position.y))
+
+
+            if (
+              collision({
+                rectangle1: player,
+                rectangle2: battleZone
+              }) &&
+              overlappingArea > player.width * player.height / 2
+              //Random Chance Battle Happens
+              && Math.random() < 0.01
+            ) {
+                console.log('activate battle');
+                battle.initiated = true
+                break;
+            }
+          }
+    }
         // This allows for holding two different movement keys at the same time, and also prevents certain objects from moving, and also prevents Player From Colliding with boundary
-        let moving = true;
-        player.moving = false;
+       
         if (keys.w.pressed && lastKey === 'w') {
         player.moving = true;    
         player.image = player.sprites.up
@@ -136,6 +197,8 @@ function movement() {
                 break;
             }
           }
+
+
           if (moving)
             movables.forEach((movable) => {
                 movable.position.y +=3
