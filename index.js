@@ -9,3 +9,12 @@ canvas.height = 576;
 context.fillStyle = 'white';
 context.fillRect(0, 0, canvas.width, canvas.height);
 
+
+const image = new Image();
+image.src = './Assets/map.png';
+
+
+
+image.onload = () => {
+    context.drawImage(image, -300, -100);
+}
