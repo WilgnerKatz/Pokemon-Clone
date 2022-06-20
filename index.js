@@ -354,7 +354,7 @@ const emby = new Sprite({
    animate: true
 })
 
-//animateBattle()
+animateBattle()
 
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
