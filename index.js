@@ -55,19 +55,19 @@ battleZonesMap.forEach((row, i) => {
 })
 
 const image = new Image();
-image.src = './Assets/map.png';
+image.src = './img/map.png';
 
 const playerDownImage = new Image();
-playerDownImage.src = './Assets/playerDown.png';
+playerDownImage.src = './img/playerDown.png';
 
 const playerUpImage = new Image();
-playerUpImage.src = './Assets/playerUp.png';
+playerUpImage.src = './img/playerUp.png';
 
 const playerLeftImage = new Image();
-playerLeftImage.src = './Assets/playerLeft.png';
+playerLeftImage.src = './img/playerLeft.png';
 
 const playerRightImage = new Image();
-playerRightImage.src = './Assets/playerRight.png';
+playerRightImage.src = './img/playerRight.png';
 
 
 const player = new Sprite({
@@ -315,7 +315,7 @@ movement();
 
 
 const battleBackgroundImage = new Image();
-battleBackgroundImage.src = './Assets/battleBackground.png'
+battleBackgroundImage.src = './img/battleBackground.png'
 const battleBackground = new Sprite({
     position: {
    x: 0, 
@@ -325,7 +325,7 @@ image: battleBackgroundImage
 })
 // enemy
 const draggleImage = new Image()
-draggleImage.src = './Assets/draggleSprite.png'
+draggleImage.src = './img/draggleSprite.png'
 const draggle = new Sprite({
    position: {
     x: 800,
@@ -340,7 +340,7 @@ const draggle = new Sprite({
 })
 
 const embyImage = new Image()
-embyImage.src = './Assets/embySprite.png'
+embyImage.src = './img/embySprite.png'
 const emby = new Sprite({
    position: {
     x: 280,
