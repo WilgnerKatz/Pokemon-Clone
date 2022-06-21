@@ -55,19 +55,19 @@ battleZonesMap.forEach((row, i) => {
 })
 
 const image = new Image();
-image.src = './Assets/map.png';
+image.src = '/Assets/map.png';
 
 const playerDownImage = new Image();
-playerDownImage.src = './Assets/playerDown.png';
+playerDownImage.src = '/Assets/playerDown.png';
 
 const playerUpImage = new Image();
-playerUpImage.src = './Assets/playerUp.png';
+playerUpImage.src = '/Assets/playerUp.png';
 
 const playerLeftImage = new Image();
-playerLeftImage.src = './Assets/playerLeft.png';
+playerLeftImage.src = '/Assets/playerLeft.png';
 
 const playerRightImage = new Image();
-playerRightImage.src = './Assets/playerRight.png';
+playerRightImage.src = '/Assets/playerRight.png';
 
 
 const player = new Sprite({
@@ -354,7 +354,7 @@ const emby = new Sprite({
    animate: true
 })
 
-animateBattle()
+//nimateBattle()
 
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
