@@ -55,7 +55,7 @@ battleZonesMap.forEach((row, i) => {
 })
 
 const image = new Image();
-image.src = '/img/map.png';
+image.src = 'img/map.png';
 
 const playerDownImage = new Image();
 playerDownImage.src = 'img/playerDown.png';
